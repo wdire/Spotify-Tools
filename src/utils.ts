@@ -31,3 +31,29 @@ export const setCookie = (cname:string, cvalue:any, exsecs:number) => {
     var expires = "expires="+d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
+
+export type AccessTokenDataCookieType = {
+	access_token:string;
+}
+
+export type AccessTokenDataType = {
+    access_token:string;
+    token_type:string;
+    expires_in:number;
+}
+
+const spotify_access_token = "spotify_access-token";
+
+export const setAccessToken = (accessTokenData:AccessTokenDataType) => {
+
+	let tokenData = {
+		access_token:accessTokenData.access_token,
+		//endTime:new Date().getTime() + (accessTokenData.expires_in * 1000)
+	};
+
+	setCookie(spotify_access_token, JSON.stringify(tokenData), accessTokenData.expires_in);
+}
+
+export const getAccessToken = () => {
+	return getCookie(spotify_access_token);
+}

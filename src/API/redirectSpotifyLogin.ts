@@ -1,4 +1,4 @@
-export const redirectSpotifyLogin = async (redirectUri:string, privatePlaylists:boolean = false) => {
+export const redirectSpotifyLogin = (redirectUri:string, privatePlaylists:boolean = false) => {
 
     const client_id = "2d6c58723f814902ab84d84a2a575a12";
     const redirect_uri = redirectUri; // set to domain
