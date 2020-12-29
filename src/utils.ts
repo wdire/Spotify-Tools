@@ -51,9 +51,20 @@ export const setAccessToken = (accessTokenData:AccessTokenDataType) => {
 		//endTime:new Date().getTime() + (accessTokenData.expires_in * 1000)
 	};
 
-	setCookie(spotify_access_token, JSON.stringify(tokenData), accessTokenData.expires_in);
+    setCookie(spotify_access_token, JSON.stringify(tokenData), accessTokenData.expires_in);
+    setLoggedIn();
 }
 
 export const getAccessToken = () => {
 	return getCookie(spotify_access_token);
+}
+
+const spotify_logged_in = "spotify_logged-in";
+
+export const setLoggedIn = () => {
+    setCookie(spotify_logged_in, true, (60 * 60 * 24 * 30)); // Keep for 30 days
+}
+
+export const checkLoggedIn = () => {
+    return getCookie(spotify_logged_in);
 }

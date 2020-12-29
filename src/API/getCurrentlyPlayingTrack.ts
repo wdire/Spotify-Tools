@@ -7,6 +7,7 @@ export type TrackInfoType = {
 export type CurrentTrackResponse = {
     status:CurrentTrackStatus;
     trackInfo?:TrackInfoType;
+    desc?:string;
 }
 
 export enum CurrentTrackStatus {
@@ -43,12 +44,14 @@ export const getCurrentlyPlayingTrack = async (accessToken:string): Promise<Curr
     }else if(response.status === 204){
         //No Content
         return {
-            status:CurrentTrackStatus.NO_CONTENT
+            status:CurrentTrackStatus.NO_CONTENT,
+            desc:"Currently you are not listening a song."
         };
     }else{
         //Error
         return {
-            status:CurrentTrackStatus.ERROR
+            status:CurrentTrackStatus.ERROR,
+            desc:"A error occured while getting song from Spotify."
         };
     }
 
