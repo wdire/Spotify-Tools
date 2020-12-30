@@ -13,8 +13,10 @@ import {
 } from "./utils";
 
 import {
-    GlobalStyle, LoginButton, Main, ToolSelect, ToolSelectItem
+    GlobalStyle, LoginButton, Main, RefreshButton, ToolSelect, ToolSelectItem
 } from "./App.styles";
+
+import { SongLyrics } from "./components/SongLyrics";
 
 export enum Tools {
     EMPTY = 0,
@@ -30,6 +32,7 @@ interface IState{
     current_song_info:TrackInfoType;
     selected_tool:Tools;
     logged_in:boolean;
+    currentlySongPlaying:boolean;
 }
 
 export class App extends React.Component<IProps, IState>{
@@ -47,6 +50,7 @@ export class App extends React.Component<IProps, IState>{
                 artist:"",
                 album_image:""
             },
+            currentlySongPlaying:false,
             selected_tool:Tools.EMPTY,
             logged_in:false
         }
@@ -107,9 +111,10 @@ export class App extends React.Component<IProps, IState>{
 
         if(trackInfo.status === CurrentTrackStatus.OK && trackInfo.trackInfo){
             this.setState({current_song_info:trackInfo.trackInfo});
+            this.setState({currentlySongPlaying:true});
         }
         else if(trackInfo.status === CurrentTrackStatus.NO_CONTENT){
-            // Show error, desc message
+            this.setState({currentlySongPlaying:false});
         }else if(trackInfo.status === CurrentTrackStatus.ERROR){
             // Refresh page
             alert("Spotify login timed out or an error occured try refresh to fix");
@@ -125,14 +130,14 @@ export class App extends React.Component<IProps, IState>{
                 <Main>
                     <h1>Spotify <span>Tools</span></h1>
                     <ToolSelect>
-                        <ToolSelectItem selected={this.state.selected_tool === Tools.GET_LYRICS ? true : false}>Get Lyrics</ToolSelectItem>
-                        <ToolSelectItem selected={this.state.selected_tool === Tools.SEARCH_IN_PLAYLISTS ? true : false}>Search in Playlists</ToolSelectItem>
+                        <ToolSelectItem onClick={()=>{this.setTool(Tools.GET_LYRICS)}} selected={this.state.selected_tool === Tools.GET_LYRICS ? true : false}>Get Lyrics</ToolSelectItem>
+                        <ToolSelectItem onClick={()=>{this.setTool(Tools.SEARCH_IN_PLAYLISTS)}} selected={this.state.selected_tool === Tools.SEARCH_IN_PLAYLISTS ? true : false}>Search in Playlists</ToolSelectItem>
                     </ToolSelect>
 
                     {
                         !this.state.logged_in ? ( 
                             <>
-                                <LoginButton onClick={() => { this.loginSpotify() }}>
+                                <LoginButton key="login" onClick={() => { this.loginSpotify() }}>
                                     <img src="images/spotify-white_small.png" alt="Spotify Logo"/>
                                     <div>Login Spotify</div>
                                 </LoginButton>
@@ -140,6 +145,41 @@ export class App extends React.Component<IProps, IState>{
                         ) : null
                     }
                     
+                    {
+                        (
+                            this.state.logged_in &&
+                            this.state.selected_tool == Tools.GET_LYRICS
+                        ) ? (
+                            <>
+                                <RefreshButton onClick={() => { this.getCurrentTrack(this.state.access_token); }}>
+                                    <img src="images/refresh-icon_white.svg" alt="Refresh Logo"/>
+                                    <div>Refresh</div>
+                                </RefreshButton>
+                            </>
+                        ) : null
+                    }
+
+                    {
+                        (
+                            this.state.logged_in && 
+                            this.state.selected_tool === Tools.GET_LYRICS &&
+                            this.state.currentlySongPlaying
+                        ) ? (
+                            <>
+                                <SongLyrics trackInfo={this.state.current_song_info}/>
+                            </>
+                        ) : [
+                            (
+                                this.state.logged_in &&
+                                this.state.selected_tool === Tools.GET_LYRICS &&
+                                !this.state.currentlySongPlaying 
+                            ) ? (
+                                <React.Fragment key="not-playing">
+                                    <span>Currently not playing a song</span>
+                                </React.Fragment>
+                            ) : null
+                        ]
+                    }
 
                 </Main>
             </>

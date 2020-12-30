@@ -8,10 +8,11 @@
     "esModuleInterop": true,
     "noUnusedLocals": false,
     "noImplicitAny": true,
-    "target": "es2015",
-    "module": "es2015",
+    "target": "es6",
+    "module":"es6",
     "strict": true,
-    "jsx": "react"
+    "jsx": "react",
+    "noEmit": true
   },
   "include": [
     "src/**/*"

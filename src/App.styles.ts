@@ -22,7 +22,9 @@ export const Main = styled.div`
     margin:0 auto;
     max-width:100%;
     width:max-content;
-    margin-top:30px;
+    margin-top:10px;
+    padding: 10px;
+    padding-bottom:80px;
 
     h1{
         font-weight:lighter;
@@ -42,8 +44,10 @@ export const ToolSelect = styled.div`
     display:flex;
     border-radius:7px;
     margin-top:15px;
+    margin-bottom:20px;
     overflow:hidden;
     border:1px solid #fff;
+    width: max-content;
 `;
 
 export const ToolSelectItem = styled.div<{selected:boolean}>`
@@ -104,4 +108,34 @@ export const LoginButton = styled.button`
         pointer-events:none;
     }
 
+`;
+
+export const RefreshButton = styled.button`
+     display:flex;
+    align-items:center;
+    color:#fff;
+    font-size:14px;
+    border-radius:6px;
+    padding:7px 14px;
+    padding-left:10px;
+    border:none;
+    background:rgba(29,185,84);
+    outline:none;
+    cursor:pointer;
+    transition:background 0.33s;
+    margin:0 auto;
+    margin-top:22px;
+    margin-bottom:30px;
+    font-size:16px;
+
+    &:hover{
+        background:rgba(40,160,80);
+    }
+
+    img{
+        height:24px;
+        width:24px;
+        margin-right:6px;
+        pointer-events:none;
+    }
 `;
