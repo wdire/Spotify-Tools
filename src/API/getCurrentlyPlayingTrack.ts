@@ -2,6 +2,7 @@ export type TrackInfoType = {
     name:string;
     artist:string;
     album_image:string;
+    trackUrl?:string;
 }
 
 export type CurrentTrackResponse = {

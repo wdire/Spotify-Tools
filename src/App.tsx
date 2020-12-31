@@ -18,7 +18,8 @@ import {
 
 import { SongLyrics } from "./components/SongLyrics";
 import { PlaylistSearch } from "./components/PlaylistSearch";
-import { getAllPaylists } from "./API/getAllPaylists";
+import { AllPaylistsStatus, getAllPaylists } from "./API/getAllPaylists";
+import { getAllTracksFromAllPlaylists, getAllTracksFromPlaylists } from "./API/getAllTracksFromPlaylists";
 
 export enum Tools {
     EMPTY = 0,
@@ -125,8 +126,6 @@ export class App extends React.Component<IProps, IState>{
             // Refresh page
             alert("Spotify login timed out or an error occured try refresh to fix");
         }
-
-        console.log(await getAllPaylists(this.state.access_token));
 
     }
 

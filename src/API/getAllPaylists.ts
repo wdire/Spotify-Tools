@@ -25,6 +25,8 @@ export const getAllPaylists = async (accessToken:string):Promise<AllPlaylistsRet
 
         if(response.status === 200){
             let responseJson = await response.json();
+            
+            //Store all playlists
             let playlists = [responseJson];
 
             // Api returns "next" that contains next "page", +(limit) offset playlists.
@@ -43,7 +45,7 @@ export const getAllPaylists = async (accessToken:string):Promise<AllPlaylistsRet
                 return p_group.items.map((p:any):PlaylistDataType=>{
                     return {
                         name: p.name,
-                        tracks:p.tracks
+                        tracks:p.tracks.href
                     }
                 }); 
             });

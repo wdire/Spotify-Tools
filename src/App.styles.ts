@@ -125,7 +125,7 @@ export const RefreshButton = styled.button`
     transition:background 0.33s;
     margin:0 auto;
     margin-top:22px;
-    margin-bottom:30px;
+    margin-bottom:25px;
     font-size:16px;
 
     &:hover{

@@ -16,7 +16,9 @@ export class PlaylistSearch extends React.Component<IProps, IState>{
         this.state = {
         }
     }
-    // Note: Set a max amounth of results. 20 etc.
+
+    // Note: Set a max amounth of search results. 20 etc.
+    // Logo Idea: Music icon with a tool icon passed through, or music icon logo with around cogwheel
     render(){
 
         console.log();
