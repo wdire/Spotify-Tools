@@ -8,6 +8,8 @@ export const TrackInfo = styled.div`
     padding: 10px 0;
     background: #282828;
     height:max-content;
+    max-width: 480px;
+    margin: 0 auto;
 `;
 
 export const TrackAlbumImage = styled.div`
@@ -60,6 +62,8 @@ export const Desc = styled.div`
     }
 `;
 
-export const TrackWrapper = styled.div`
-    
+export const TrackWrapper = styled.div<{show:boolean}>`
+    ${ props => (!props.show) && css`
+        display:none;
+    `}
 `;

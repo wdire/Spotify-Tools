@@ -11,7 +11,7 @@ export type LyricsReturn = {
 
 export const getSongLyrics = async (song:string, artist:string): Promise<LyricsReturn> => {
 
-    song = song.split("-")[0].trim().split(" ").join("%20");
+    song = song.split(" ").join("%20");
     artist = artist.split(" ").join("%20");
 
     const endpoint = `https://orion.apiseeds.com/api/music/lyric/${artist}/${song}?apikey=J04gkAi0mzSpy9U7nQ2kfRCmuYVCXJgCcfpRHC5ZWg3koFp7lsNsRxLmbElolF7q`;

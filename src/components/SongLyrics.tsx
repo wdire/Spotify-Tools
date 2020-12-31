@@ -4,7 +4,8 @@ import { getSongLyrics, LyricsReturn, LyricsStatus } from "../API/getSongLyrics"
 import { Desc, Lyrics, LyricsWrapper, TrackAlbumImage, TrackBrand, TrackDetails, TrackInfo, TrackName, TrackWrapper } from "./SongLyrics.styles";
 
 interface IProps{
-    trackInfo:TrackInfoType
+    trackInfo:TrackInfoType;
+    show:boolean;
 }
 
 interface IState{
@@ -39,7 +40,10 @@ export class SongLyrics extends React.Component<IProps, IState>{
     }
 
     componentDidMount(){
-        this.getLyricsData();
+        console.log(this.state.lyrics);
+        if(this.state.currTrackInfo.name !== this.props.trackInfo.name){
+            this.getLyricsData();
+        }
     }
 
     getLyricsData = async () => {
@@ -71,7 +75,7 @@ export class SongLyrics extends React.Component<IProps, IState>{
 
         return (
             <>
-                <TrackWrapper>
+                <TrackWrapper show={this.props.show}>
                 
                     <TrackInfo>
                         <TrackAlbumImage>
@@ -95,12 +99,12 @@ export class SongLyrics extends React.Component<IProps, IState>{
 
                         {
                             this.state.lyrics ? (
-                                <Lyrics dangerouslySetInnerHTML={{__html:this.state.lyrics}}>
+                                <Lyrics key="lyrics" dangerouslySetInnerHTML={{__html:this.state.lyrics}}>
                                     
                                 </Lyrics>
                             ) : [
                                 this.state.desc ? (
-                                    <Desc dangerouslySetInnerHTML={{__html:this.state.desc}}></Desc>
+                                    <Desc key="song_desc" dangerouslySetInnerHTML={{__html:this.state.desc}}></Desc>
                                 ) : null
                             ]
                         }

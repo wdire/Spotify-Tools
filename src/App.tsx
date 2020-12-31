@@ -17,6 +17,8 @@ import {
 } from "./App.styles";
 
 import { SongLyrics } from "./components/SongLyrics";
+import { PlaylistSearch } from "./components/PlaylistSearch";
+import { getAllPaylists } from "./API/getAllPaylists";
 
 export enum Tools {
     EMPTY = 0,
@@ -110,7 +112,11 @@ export class App extends React.Component<IProps, IState>{
         let trackInfo:CurrentTrackResponse = await getCurrentlyPlayingTrack(access_token);
 
         if(trackInfo.status === CurrentTrackStatus.OK && trackInfo.trackInfo){
-            this.setState({current_song_info:trackInfo.trackInfo});
+
+            if(trackInfo.trackInfo.name !== this.state.current_song_info.name){
+                this.setState({current_song_info:trackInfo.trackInfo});
+            }
+
             this.setState({currentlySongPlaying:true});
         }
         else if(trackInfo.status === CurrentTrackStatus.NO_CONTENT){
@@ -119,6 +125,8 @@ export class App extends React.Component<IProps, IState>{
             // Refresh page
             alert("Spotify login timed out or an error occured try refresh to fix");
         }
+
+        console.log(await getAllPaylists(this.state.access_token));
 
     }
 
@@ -159,26 +167,43 @@ export class App extends React.Component<IProps, IState>{
                         ) : null
                     }
 
+                    <SongLyrics show={
+                            (
+                                this.state.logged_in && 
+                                this.state.selected_tool === Tools.GET_LYRICS &&
+                                this.state.currentlySongPlaying
+                            ) ? true : false
+                        }
+                        trackInfo={this.state.current_song_info}
+                    />
+
                     {
-                        (
+                        !(
                             this.state.logged_in && 
                             this.state.selected_tool === Tools.GET_LYRICS &&
                             this.state.currentlySongPlaying
-                        ) ? (
-                            <>
-                                <SongLyrics trackInfo={this.state.current_song_info}/>
-                            </>
-                        ) : [
+                        ) ? [
                             (
                                 this.state.logged_in &&
                                 this.state.selected_tool === Tools.GET_LYRICS &&
                                 !this.state.currentlySongPlaying 
                             ) ? (
                                 <React.Fragment key="not-playing">
-                                    <span>Currently not playing a song</span>
+                                    <div style={{textAlign:"center"}}>Currently not playing a song</div>
                                 </React.Fragment>
                             ) : null
-                        ]
+                        ] : null
+                    }
+
+                    {
+                        (
+                            this.state.logged_in &&
+                            this.state.selected_tool === Tools.SEARCH_IN_PLAYLISTS
+                        ) ? (
+                            <>
+                                <PlaylistSearch/>
+                            </>
+                        ) : null
                     }
 
                 </Main>
