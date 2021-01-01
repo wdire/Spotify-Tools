@@ -3,6 +3,7 @@ import { CurrentTrackResponse, CurrentTrackStatus, getCurrentlyPlayingTrack, Tra
 
 import {redirectSpotifyLogin} from "./API/redirectSpotifyLogin";
 
+
 import { 
     setAccessToken, 
     getPartsOfUrl, 
@@ -42,7 +43,7 @@ export class App extends React.Component<IProps, IState>{
     constructor(props: IProps){
         super(props);
 
-        this.redirectUri = window.location.origin;//"http://localhost:3000";
+        this.redirectUri = "https://ramazanozturk.com/apps/spotify-tools";
 
         this.state = {
             access_token:"",

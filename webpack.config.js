@@ -1,3 +1,4 @@
+const copyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
@@ -16,14 +17,26 @@ module.exports = {
   },
 
   module: {
-    rules: [{ test: /\.(ts|js)x?$/, loader: 'babel-loader', exclude: /node_modules/ , options:{
-      cacheDirectory:true
-    }}],
+    rules: [
+      { 
+        test: /\.(ts|js)x?$/, 
+        loader: 'babel-loader', 
+        exclude: /node_modules/ , 
+        options:{
+          cacheDirectory:true
+        }
+      }
+    ],
   },
 
   plugins: [
     new HtmlWebpackPlugin({ inject: true, template: path.join(APP_PATH, 'index.html') }),
     new ForkTsCheckerWebpackPlugin(),
+    new copyWebpackPlugin({
+      patterns: [
+        { from: "src/images/", to: "images" },
+      ],
+    }),
   ],
 
   performance: {
