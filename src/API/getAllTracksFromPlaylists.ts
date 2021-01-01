@@ -67,7 +67,7 @@ export const getAllTracksFromPlaylists = async (accessToken:string, playlist:Pla
                 return {
                     name:t.track.name,
                     artist:t.track.artists[0].name,
-                    album_image:t.track.album.images[1].url,
+                    album_image:t.track.album.images[2].url,
                     trackUrl:t.track.external_urls?.spotify
                 }
             });

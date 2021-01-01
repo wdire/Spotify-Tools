@@ -31,8 +31,9 @@ module.exports = {
   },
 
   devServer: {
+    host:"0.0.0.0",
     open: true,
-    port:3000
+    openPage:"http://localhost:3000",
+    port:3000,
   },
-
 };

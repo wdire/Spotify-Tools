@@ -42,7 +42,7 @@ export class App extends React.Component<IProps, IState>{
     constructor(props: IProps){
         super(props);
 
-        this.redirectUri = "http://localhost:3000";
+        this.redirectUri = window.location.origin;//"http://localhost:3000";
 
         this.state = {
             access_token:"",
@@ -74,7 +74,7 @@ export class App extends React.Component<IProps, IState>{
 
             if(loggedIn){
                 this.getCurrentTrack(accessToken.access_token);
-                this.setTool(Tools.GET_LYRICS);
+                this.setTool(Tools.SEARCH_IN_PLAYLISTS, true);
             }
 
         }else{
@@ -103,8 +103,10 @@ export class App extends React.Component<IProps, IState>{
         redirectSpotifyLogin(this.redirectUri, privatePlaylists);
     }
 
-    setTool = (tool:Tools) => {
-        this.setState({selected_tool:tool});
+    setTool = (tool:Tools, logged_in:boolean) => {
+        if(logged_in){
+            this.setState({selected_tool:tool});
+        }
     }
 
     getCurrentTrack = async (access_token:string) => {
@@ -135,8 +137,8 @@ export class App extends React.Component<IProps, IState>{
                 <Main>
                     <h1>Spotify <span>Tools</span></h1>
                     <ToolSelect>
-                        <ToolSelectItem onClick={()=>{this.setTool(Tools.GET_LYRICS)}} selected={this.state.selected_tool === Tools.GET_LYRICS ? true : false}>Get Lyrics</ToolSelectItem>
-                        <ToolSelectItem onClick={()=>{this.setTool(Tools.SEARCH_IN_PLAYLISTS)}} selected={this.state.selected_tool === Tools.SEARCH_IN_PLAYLISTS ? true : false}>Search in Playlists</ToolSelectItem>
+                        <ToolSelectItem onClick={()=>{this.setTool(Tools.GET_LYRICS, this.state.logged_in)}} selected={this.state.selected_tool === Tools.GET_LYRICS ? true : false}>Get Lyrics</ToolSelectItem>
+                        <ToolSelectItem onClick={()=>{this.setTool(Tools.SEARCH_IN_PLAYLISTS, this.state.logged_in)}} selected={this.state.selected_tool === Tools.SEARCH_IN_PLAYLISTS ? true : false}>Search in Playlists</ToolSelectItem>
                     </ToolSelect>
 
                     {
@@ -192,16 +194,16 @@ export class App extends React.Component<IProps, IState>{
                         ] : null
                     }
 
-                    {
-                        (
-                            this.state.logged_in &&
-                            this.state.selected_tool === Tools.SEARCH_IN_PLAYLISTS
-                        ) ? (
-                            <>
-                                <PlaylistSearch access_token={this.state.access_token}/>
-                            </>
-                        ) : null
-                    }
+                    
+                    <PlaylistSearch
+                        show={
+                            (
+                                this.state.logged_in &&
+                                this.state.selected_tool === Tools.SEARCH_IN_PLAYLISTS
+                            ) ? true : false
+                        }
+                        access_token={this.state.access_token}
+                    />
 
                 </Main>
             </>

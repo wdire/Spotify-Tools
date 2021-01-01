@@ -43,15 +43,22 @@ export const TrackBrand = styled.div`
     margin-top:4px;
 `;
 
+export const Lyrics = styled.div`
+    line-height:1.6;
+    font-size:16px;
+`;
+
 export const LyricsWrapper = styled.div`
     max-width:500px;
     margin-top:25px;
     text-align:center;
-`;
 
-export const Lyrics = styled.div`
-    line-height:1.6;
-    font-size:16px;
+    @media (max-width:500px){
+        ${Lyrics}{
+            font-size:14px;
+        }
+    }
+
 `;
 
 export const Desc = styled.div`

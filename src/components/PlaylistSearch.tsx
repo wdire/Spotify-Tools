@@ -1,5 +1,5 @@
 import React from "react";
-import { SearchBar } from "./PlaylistSearch.styles";
+import { SearchBar, SearchBarButton, SearchBarInput, SearchResultItem, SearchResultItemAlbumImage, SearchResultItemBandName, SearchResultItemDetails, SearchResultItemName, SearchResultItemPlaylistName, SearchResultItemTrackName, SearchResults, SearchWrapper } from "./PlaylistSearch.styles";
 
 import { AllPaylistsStatus, getAllPaylists } from "../API/getAllPaylists";
 import { getAllTracksFromAllPlaylists, AllPlaylistDataWithTracksType } from "../API/getAllTracksFromPlaylists";
@@ -7,6 +7,7 @@ import { setPlaylistsData_storage, getPlaylistsData_storage, setPlaylistsDataLas
 
 interface IProps{
     access_token:string;
+    show:boolean;
 }
 
 interface IState{
@@ -46,8 +47,6 @@ export class PlaylistSearch extends React.Component<IProps, IState>{
             }
 
         }
-
-        console.log(this.allPlaylistsData);
    
     }
 
@@ -71,13 +70,30 @@ export class PlaylistSearch extends React.Component<IProps, IState>{
     // Logo Idea: Music icon with a tool icon passed through, or music icon logo with around cogwheel
     render(){
 
-        console.log();
-
         return( 
             <>
-                <SearchBar>
-
-                </SearchBar>
+                <SearchWrapper show={this.props.show}>
+                    <SearchBar>
+                        <SearchBarInput placeholder={"Search in All Playlists.."}></SearchBarInput>
+                        <SearchBarButton>
+                            <img src="images/search-icon_white.svg" alt="Search Icon"/>
+                        </SearchBarButton>
+                    </SearchBar>
+                    <SearchResults>
+                        <SearchResultItem>
+                            <SearchResultItemAlbumImage>
+                                <img src="https://i.scdn.co/image/ab67616d00001e02086f98344b4a2ff71f2622a8" alt="Mr. Brightside Album Image"/>
+                            </SearchResultItemAlbumImage>
+                            <SearchResultItemDetails>
+                                <SearchResultItemName>
+                                    <SearchResultItemTrackName href={"https://open.spotify.com/track/6vluCORdF8bV6zhXfKyKBp"} target={"_blank"}>The White Stripes</SearchResultItemTrackName>
+                                    <SearchResultItemBandName>Blue Orchid</SearchResultItemBandName>
+                                </SearchResultItemName>
+                                <SearchResultItemPlaylistName>Deep Dive: 00s Rock</SearchResultItemPlaylistName>
+                            </SearchResultItemDetails>
+                        </SearchResultItem>
+                    </SearchResults>
+                </SearchWrapper>
             </>
         );
     }
