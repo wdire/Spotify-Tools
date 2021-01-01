@@ -42,6 +42,7 @@ export const SearchBarButton = styled.div`
 
 export const SearchResults = styled.div`
     display:flex;
+    flex-direction: column;
 `;
 
 export const SearchResultItem = styled.div`
@@ -52,17 +53,25 @@ export const SearchResultItem = styled.div`
     border-radius:8px;
     overflow:hidden;
     background:#424242;
+    margin-bottom:15px;
 `;
 
 export const SearchResultItemAlbumImage = styled.div`
     width:52px;
     height:52px;
     margin-right:10px;
+    min-width: 52px;
 
     img{
         height:auto;
         max-width:100%;
         display:block;
+    }
+
+    @media (max-width:450px){
+        width:44px;
+        height:44px;
+        min-width: 44px;
     }
 `;
 
@@ -102,7 +111,7 @@ export const SearchWrapper = styled.div<{show:boolean}>`
     ${ props => (!props.show) && css`
         display:none;
     `}
-    width:450px;
+    width:500px;
     max-width:100%;
     padding:0 5px;
 
@@ -121,4 +130,37 @@ export const SearchWrapper = styled.div<{show:boolean}>`
 
     }
 
+`;
+
+
+const loading_borderSize = 3;
+const loading_size = 28;
+
+export const Loading = styled.div`
+    justify-content:center;
+    display: flex;
+    align-items:center;
+    width:100%;
+    height: ${loading_size + loading_borderSize * 2}px;
+
+    &:before {
+        content: " ";
+        display: block;
+        width: ${loading_size}px;
+        margin-right:13px;
+        height: ${loading_size}px;
+        border-radius: 50%;
+        border: ${loading_borderSize}px solid #fff;
+        border-color: #fff #fff #fff transparent;
+        animation: loading 1.2s linear infinite;
+    }
+
+    @keyframes loading {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 `;

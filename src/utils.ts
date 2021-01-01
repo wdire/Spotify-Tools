@@ -104,3 +104,24 @@ export const setPlaylistsDataLastTime_storage = (date:Date) =>{
 export const getPlaylistsDataLastTime_storage = () =>{
     return asyncLocalStorage.getItem(spotify_playlists_data_last_time);
 }
+
+export const doesArraysHasMatch = (arr1:Array<string>, arr2:Array<string>) => {
+    for(var i in arr1) {   
+        if(arr2.indexOf(arr1[i]) > -1){
+            return true;
+        }
+    }
+
+    return false;
+};
+
+export const removeMatchesFromArray = (originalArray:Array<string>, arr2:Array<string>) => {
+    let returnArr = [];
+    for(var i in originalArray) {   
+        if(arr2.indexOf(originalArray[i]) === -1){
+            returnArr.push(originalArray[i]);
+        }
+    }
+
+    return returnArr;
+}

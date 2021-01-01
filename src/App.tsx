@@ -74,7 +74,7 @@ export class App extends React.Component<IProps, IState>{
 
             if(loggedIn){
                 this.getCurrentTrack(accessToken.access_token);
-                this.setTool(Tools.SEARCH_IN_PLAYLISTS, true);
+                this.setTool(Tools.GET_LYRICS, true);
             }
 
         }else{

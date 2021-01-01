@@ -46,19 +46,22 @@ export const ToolSelect = styled.div`
     margin-top:15px;
     margin-bottom:20px;
     overflow:hidden;
-    border:1px solid #fff;
     width: max-content;
 `;
 
 export const ToolSelectItem = styled.div<{selected:boolean}>`
-    //border:1px solid red;
+border:1px solid #fff;
     padding:8px 20px;
     position:relative;
-    transition:background 0.28s;
+    transition:background 0.28s, border-color 0.28s;
     cursor:pointer;
     font-size:16px;
 
     &:first-child{
+        border-top-left-radius:7px;
+        border-bottom-left-radius:7px;
+        border-right:none;
+
         &:after{
             content:"";
             width:1px;
@@ -72,12 +75,19 @@ export const ToolSelectItem = styled.div<{selected:boolean}>`
         }
     }
 
+    &:last-child{
+        border-top-right-radius:7px;
+        border-bottom-right-radius:7px;
+        border-left:none;
+    }
+
     &:hover{
         background:rgba(255,255,255,.18);
     }
 
     ${ props => (props.selected) && css`
         background:rgba(29,185,84,0.8)!important;
+        border-color:rgba(29,185,84,0.8)!important;
     `}
 
 `;
