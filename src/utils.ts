@@ -1,3 +1,5 @@
+import { AllPlaylistDataWithTracksType } from "./API/getAllTracksFromPlaylists";
+
 export const getPartsOfUrl = (url:string) => {
     return url.split("&").reduce(function(initial:any, item) {
         if (item) {
@@ -67,4 +69,38 @@ export const setLoggedIn = () => {
 
 export const checkLoggedIn = () => {
     return getCookie(spotify_logged_in);
+}
+
+
+const asyncLocalStorage = {
+    setItem: function (key:string, value:string) {
+        return Promise.resolve().then(function () {
+            localStorage.setItem(key, value);
+        });
+    },
+    getItem: function (key:string) {
+        return Promise.resolve().then(function () {
+            return localStorage.getItem(key);
+        });
+    }
+};
+
+const spotify_playlist_data = "spotify_playlist-data";
+
+export const setPlaylistsData_storage = (playlistsData:AllPlaylistDataWithTracksType[]) =>{
+    return asyncLocalStorage.setItem(spotify_playlist_data, JSON.stringify(playlistsData));
+}
+
+export const getPlaylistsData_storage = () =>{
+    return asyncLocalStorage.getItem(spotify_playlist_data);
+}
+
+const spotify_playlists_data_last_time = "spotify_playlist-data_last-time";
+
+export const setPlaylistsDataLastTime_storage = (date:Date) =>{
+    return asyncLocalStorage.setItem(spotify_playlists_data_last_time, date.getTime().toString());
+}
+
+export const getPlaylistsDataLastTime_storage = () =>{
+    return asyncLocalStorage.getItem(spotify_playlists_data_last_time);
 }

@@ -40,7 +40,6 @@ export class SongLyrics extends React.Component<IProps, IState>{
     }
 
     componentDidMount(){
-        console.log(this.state.lyrics);
         if(this.state.currTrackInfo.name !== this.props.trackInfo.name){
             this.getLyricsData();
         }

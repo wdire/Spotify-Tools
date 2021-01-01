@@ -7,7 +7,7 @@ type AllTracksFromPlaylistsReturn = {
     all_tracks?:TrackInfoType[]
 }
 
-export type AllPlaylistDataWithTracks = {
+export type AllPlaylistDataWithTracksType = {
     playlist_name:string;
     all_tracks:TrackInfoType[]
 }
@@ -17,19 +17,20 @@ enum AllTracksFromPlaylistsStatus {
     ERROR = 1
 }
 
-export const getAllTracksFromAllPlaylists = async (accessToken:string, playlistsData:PlaylistDataType[]):Promise<AllPlaylistDataWithTracks[]> => {
+export const getAllTracksFromAllPlaylists = async (accessToken:string, playlistsData:PlaylistDataType[]):Promise<AllPlaylistDataWithTracksType[]> => {
 
-    let allData:AllPlaylistDataWithTracks[] = [];
+    let allData:AllPlaylistDataWithTracksType[] = [];
 
-    playlistsData.forEach(async (p_group)=>{
-        let pData = await getAllTracksFromPlaylists(accessToken, p_group);
-        if(pData.status === AllTracksFromPlaylistsStatus.OK && pData.playlist_name && pData.all_tracks)
+    for(let i = 0; i < playlistsData.length; i++){
+        let pData = await getAllTracksFromPlaylists(accessToken, playlistsData[i]);
+        if(pData.status === AllTracksFromPlaylistsStatus.OK && pData.playlist_name && pData.all_tracks){
             
             allData.push({
                 playlist_name:pData.playlist_name,
                 all_tracks:pData.all_tracks
             });
-    });
+        }
+    }
 
     return allData;
 }

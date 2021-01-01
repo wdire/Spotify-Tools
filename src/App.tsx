@@ -18,8 +18,6 @@ import {
 
 import { SongLyrics } from "./components/SongLyrics";
 import { PlaylistSearch } from "./components/PlaylistSearch";
-import { AllPaylistsStatus, getAllPaylists } from "./API/getAllPaylists";
-import { getAllTracksFromAllPlaylists, getAllTracksFromPlaylists } from "./API/getAllTracksFromPlaylists";
 
 export enum Tools {
     EMPTY = 0,
@@ -200,7 +198,7 @@ export class App extends React.Component<IProps, IState>{
                             this.state.selected_tool === Tools.SEARCH_IN_PLAYLISTS
                         ) ? (
                             <>
-                                <PlaylistSearch/>
+                                <PlaylistSearch access_token={this.state.access_token}/>
                             </>
                         ) : null
                     }
